@@ -5,11 +5,11 @@ var _novo = comecaCom(_arr, 's');
 
 function comecaCom(_arr, _comeca){
     return _arr.filter(function(arr){
-        return arr.substr(0,1) == _comeca ? true : false;
+        return arr.charAt(0) == _comeca ? true : false;
     });
 }
 
 // ou pode ser feita pontualmente
 var _novo = _arr.filter(function(arr){
-    return arr.substr(0,1) == 'S' ? true : false;
+    return arr.charAt(0) == 'S' ? true : false;
 });

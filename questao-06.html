@@ -41,9 +41,9 @@
             }
 
             // getters
-            this.getNome(){ return nome; }
+            /*this.getNome(){ return nome; }
             this.getSobrenome(){ return sobrenome; }
-            this.getSalarioMensal(){ return salarioMensal; }
+            this.getSalarioMensal(){ return salarioMensal; }*/
         };
 
         var _form = document.getElementById('formulario').addEventListener('submit', function(e){
@@ -62,6 +62,8 @@
 
             // limpa o formulario
             limpaCampos();
+
+            console.log(_dados);
 
             // evita o envio do formulario
             e.preventDefault();
