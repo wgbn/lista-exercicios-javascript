@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>questao 06</title>
+</head>
+<body>
+
+    <style>
+        label { display: block; text-transform: uppercase; font-size: .7em; }
+        input { display: block; margin-bottom: 1em; }
+    </style>
+
+    <form id="formulario" method="post">
+        <label for="nome">Nome</label>
+        <input type="text" name="nome" id="nome" pattern="[A-Za-z]+" title="Somente letras" required>
+
+        <label for="sobrenome">Sobrenome</label>
+        <input type="text" name="sobrenome" id="sobrenome" pattern="[A-Za-z]+" title="Somente letras" required>
+
+        <label for="salario">Salario</label>
+        <input type="text" name="salario" id="salario" pattern="[0-9.]+" title="Somente números" required>
+
+        <input type="submit" value="Cadastrar" id="enviar">
+    </form>
+
+    <script>
+        var _empregados = [];
+
+        var Empregado = function(_dados){
+            var nome            = _dados.nome;
+            var sobrenome       = _dados.sobrenome;
+            var salarioMensal   = _dados.salario;
+
+            this.calcularSalarioAno = function(){
+                return salarioMensal * 12;
+            }
+
+            this.dadosEmpregado = function(){
+                return nome + " " + sobrenome + ", Salário: " + salarioMensal;
+            }
+
+            // getters
+            this.getNome(){ return nome; }
+            this.getSobrenome(){ return sobrenome; }
+            this.getSalarioMensal(){ return salarioMensal; }
+        };
+
+        var _form = document.getElementById('formulario').addEventListener('submit', function(e){
+            // objeto literal
+            var _dados = {
+                nome:       document.getElementsByName('nome')[0].value,
+                sobrenome:  document.getElementsByName('sobrenome')[0].value,
+                salario:    document.getElementsByName('salario')[0].value
+            };
+
+            // adiciona a lista
+            _empregados.push(new Empregado(_dados));
+
+            // exibe sucesso ao usuario
+            alert('Cadastrado com sucesso!');
+
+            // limpa o formulario
+            limpaCampos();
+
+            // evita o envio do formulario
+            e.preventDefault();
+        }, false);
+
+        function limpaCampos(){
+            var _campos = document.getElementsByTagName('input');
+
+            for (var i = 0; i < _campos.length; i++)
+                if (_campos[i].getAttribute("type") == 'text')
+                    _campos[i].value = '';
+        }
+    </script>
+
+</body>
+</html>

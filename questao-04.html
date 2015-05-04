@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>questao 04</title>
+</head>
+<body>
+
+    <style>
+        #box {
+            background: yellow;
+            width: 200px;
+            height: 200px;
+            position: relative;
+        }
+    </style>
+
+    <div id="box"></div>
+
+    <script>
+        var _div = document.getElementById('box');
+        var _posicao = 0;
+
+        var desloca = function(_pos){
+            _div.style.top = _pos+'px';
+            _div.style.left = _pos+'px';
+        }
+
+        var tempo = setInterval(function(){
+            if (_posicao < 100)
+                desloca(_posicao++);
+            else
+                clearInterval(tempo);
+        }, 10);
+    </script>
+
+</body>
+</html>

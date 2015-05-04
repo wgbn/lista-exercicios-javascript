@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Questao 06</title>
+</head>
+<body>
+
+    <style>
+        .clearfix {
+            overflow: hidden;
+            zoom: 1;
+        }
+        .geral {
+            width: 500px;
+            border: 1px solid #ccc;
+        }
+        .barra {
+            background-color: rgba(204, 204, 204, .5);
+            padding: .5em;
+            text-align: center;
+        }
+        .barra input, .barra button {
+            float: left;
+            padding: 1%;
+            margin: 0;
+            border: 0;
+        }
+        .barra input {
+            width: 78%;
+            -webkit-border-radius: 5px 0 0 5px;
+            border-radius: 5px 0 0 5px;
+        }
+        .barra input:focus, .barra button:focus {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            outline: 0;
+        }
+        .barra button {
+            width: 19%;
+            -webkit-border-radius: 0 5px 5px 0;
+            border-radius: 0 5px 5px 0;
+            background-color: deepskyblue;
+            color: #fff;
+            font-weight: bold;
+        }
+        .lista {
+            padding: .5em;
+        }
+        .lista .item {
+            margin-bottom: .5em;
+            -webkit-box-shadow: 0px 0px 5px 0 rgba(0,0,0,.3);
+            box-shadow: 0px 0px 5px 0 rgba(0,0,0,.3);
+            cursor: pointer;
+
+            display:flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-content: flex-start;
+            align-items: stretch;
+        }
+        .lista .item:last-child {
+            margin-bottom: 0;
+        }
+        .lista .item .status, .lista .item .texto {
+            display: inline-block;
+            /*float: left;*/
+            padding: .3em;
+        }
+        .lista .item .status {
+            width: 30px;
+            flex-grow: 0;
+            flex-shrink: 0;
+            flex-basis: 30px;
+        }
+        .lista .item .texto {
+            flex-grow: 1;
+        }
+
+        .fundo-verde {
+            background-color: forestgreen;
+        }
+
+        .fundo-vermelho {
+            background-color: palevioletred;
+        }
+
+        .concluido {
+            text-decoration: line-through;
+        }
+    </style>
+
+    <main class="geral">
+
+        <section class="barra clearfix">
+            <input type="text" id="tarefa" maxlength="1000">
+            <button>inserir</button>
+        </section>
+
+        <section class="lista"></section>
+
+    </main>
+
+    <script>
+        var meuApp = {
+            _lista: [],
+            _btnInserir: null,
+
+            init: function(){
+                meuApp._btnInserir = document.querySelector('.barra button').addEventListener('click', meuApp.inserirTarefa);
+
+                document.querySelector('body').addEventListener('click', meuApp.marcarTarefa);
+
+                meuApp.printTarefas();
+            },
+
+            printTarefas: function(){
+                var _htm = '';
+                var _tagLista = document.querySelector('.lista');
+
+                if (meuApp._lista.length > 0){
+
+                    meuApp._lista.forEach(function(_val,_key){
+                        var _htm = document.createElement('div');
+                        _htm.setAttribute('class', 'item');
+                        _htm.setAttribute('id', 'tarefa-'+_key);
+
+                        var _status = document.createElement('div');
+                        _status.setAttribute('class', 'status '+(_val.status ? 'fundo-verde':'fundo-vermelho'));
+                        _status.setAttribute('data-id',_key);
+
+                        var _st_texto = document.createTextNode('&nbsp;');
+
+                        _status.appendChild(_st_texto);
+                        _htm.appendChild(_status);
+
+                        var _texto = document.createElement('div');
+                        _texto.setAttribute('texto', 'status '+(_val.status ? 'concluido':''));
+                        _texto.setAttribute('data-id',_key);
+
+                        var _tx_texto = document.createTextNode(_val.tarefa);
+
+                        /*_htm += '<div class="item clearfix" id="tarefa-'+_key+'">';
+                            _htm += '<div class="status '+(_val.status ? 'fundo-verde':'fundo-vermelho')+'" data-id="'+_key+'">&nbsp;</div>';
+                            _htm += '<div class="texto" data-id="'+_key+'">'+_val.tarefa+'</div>';
+                        _htm += '</div>';*/
+                    });
+
+                    _tagLista.innerHTML = _htm;
+                } else {
+                    _tagLista.innerHTML = '<em>Nenhuma tarefa...</em>';
+                }
+            },
+
+            inserirTarefa: function(e){
+                var _txt = document.getElementById('tarefa');
+
+                if (_txt.value.length > 0){
+                    meuApp._lista.push({tarefa: _txt.value, status: 0});
+
+                    meuApp.printTarefas();
+
+                    _txt.value = '';
+                } else {
+                    alert('Escreva uma tarefa');
+                }
+            },
+
+            marcarTarefa: function(e){
+                if (e.target.className == 'texto' || e.target.className == 'status'){
+                    var _item = document.getElementById('tarefa-'+e.target.dataset.id);
+                    document.querySelector('.lista').removeChild(_item);
+                    console.log(e.target.dataset.id);
+                }
+            }
+
+        };
+
+        meuApp.init();
+    </script>
+
+</body>
+</html>
