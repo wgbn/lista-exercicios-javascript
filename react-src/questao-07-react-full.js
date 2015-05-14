@@ -22,6 +22,7 @@ var ListaTarefas = React.createClass({
 
         this.lista = _lista;
         this.setState({sts: new Date().getTime()});
+        this.forceUpdate(this);
         console.log(this.state.sts);
     },
 
@@ -95,11 +96,6 @@ var ItemLista = React.createClass({
 
         this.props.onMudarEstado();
     },
-
-    /*toggle: function() {
-        console.info('ListaItem::toggle()');
-        this.setState({status: !this.state.status});
-    },*/
 
     render: function(){
         console.info('ListaItem::render()');
